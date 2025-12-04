@@ -1,11 +1,10 @@
 services:
-  # 백엔드 서비스 (Java Spring Boot)
+  # 백엔드 서비스 (Docker)
   - type: web
     name: mrdinner-backend
-    runtime: java
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     plan: free
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -jar target/mrdinner-backend-1.0.0.jar
     envVars:
       - key: SPRING_DATASOURCE_URL
         sync: false

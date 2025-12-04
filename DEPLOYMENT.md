@@ -39,10 +39,9 @@
    - GitHub 레포지토리 연결
    - 다음 설정 입력:
      - **Name**: `mrdinner-backend`
-     - **Environment**: `Java`
-     - **Build Command**: `mvn clean package -DskipTests`
-     - **Start Command**: `java -jar target/mrdinner-backend-1.0.0.jar`
-     - **Root Directory**: (비워두기)
+     - **Environment**: `Docker`
+     - **Dockerfile Path**: `./Dockerfile`
+     - **Docker Context**: `.` (현재 디렉토리)
 
 3. **환경 변수 설정** (위와 동일)
 
