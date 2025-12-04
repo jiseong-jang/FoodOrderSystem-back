@@ -27,10 +27,10 @@ logs/
 # Environment variables
 .env
 .env.local
-application.yml
-application.properties
-application-*.yml
-application-*.properties
+# application.yml - now tracked in git
+# application.properties
+# application-*.yml
+# application-*.properties
 
 # OS
 Thumbs.db
