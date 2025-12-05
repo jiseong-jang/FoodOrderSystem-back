@@ -441,7 +441,8 @@ public class OrderService {
                 order.getCreatedAt(),
                 order.getKitchenStaff() != null ? order.getKitchenStaff().getEmployeeId() : null,
                 order.getDeliveryStaff() != null ? order.getDeliveryStaff().getEmployeeId() : null,
-                couponDto
+                couponDto,
+                order.getCustomer() != null ? order.getCustomer().getAddress() : null
         );
     }
 

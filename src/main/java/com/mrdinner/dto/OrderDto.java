@@ -25,5 +25,6 @@ public class OrderDto {
     private String kitchenStaffId;
     private String deliveryStaffId;
     private CouponDto coupon;
+    private String customerAddress;
 }
 
