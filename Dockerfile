@@ -18,8 +18,9 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# 빌드된 JAR 파일 복사
-COPY --from=builder /app/target/mrdinner-backend-1.0.0.jar app.jar
+# 빌드된 JAR 파일 복사 (Spring Boot는 기본적으로 {artifactId}-{version}.jar 형식으로 생성)
+# 실제 생성된 JAR 파일을 찾아서 복사
+COPY --from=builder /app/target/*.jar app.jar
 
 # 포트 노출
 EXPOSE 8080
