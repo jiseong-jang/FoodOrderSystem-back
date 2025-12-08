@@ -40,8 +40,12 @@ public class PriceCalculationService {
                     continue;
                 }
                 Integer customQuantity = entry.getValue();
+                if (customQuantity == null || customQuantity <= 0) {
+                    continue;
+                }
 
                 int defaultQuantity = MenuComposition.getDefaultQuantity(menu.getType(), code);
+                // 메뉴에 없는 아이템의 경우 기본 수량이 0이므로, 수량이 있으면 그대로 가격 계산
                 int quantityDiff = customQuantity - defaultQuantity;
 
                 if (quantityDiff != 0) {

@@ -140,13 +140,35 @@ public class KitchenService {
             Map<String, Integer> customized = orderItem.getCustomizedQuantities();
             int itemQuantity = orderItem.getQuantity();
 
-            // 기본 구성 + 커스터마이징 수량 계산
-            for (Map.Entry<MenuItemCode, Integer> entry : baseComposition.entrySet()) {
-                MenuItemCode itemCode = entry.getKey();
-                int baseQty = entry.getValue();
-                int customQty = customized != null ? customized.getOrDefault(itemCode.name(), baseQty) : baseQty;
-                int totalQty = customQty * itemQuantity;
-                requiredItems.merge(itemCode.name(), totalQty, Integer::sum);
+            // customizedQuantities의 모든 항목을 처리 (기본 구성에 없는 추가 아이템 포함)
+            if (customized != null && !customized.isEmpty()) {
+                for (Map.Entry<String, Integer> entry : customized.entrySet()) {
+                    String itemCodeStr = entry.getKey();
+                    Integer customQty = entry.getValue();
+                    
+                    if (customQty == null || customQty <= 0) {
+                        continue;
+                    }
+                    
+                    MenuItemCode itemCode = MenuItemCode.fromValue(itemCodeStr);
+                    if (itemCode == null) {
+                        continue;
+                    }
+                    
+                    // customizedQuantities에 있는 모든 수량을 그대로 사용
+                    // 메뉴 기본 구성에 없는 추가 아이템도 포함되어 있음
+                    // 예: 발렌타인 디너에 베이컨 2개 추가 시, 베이컨 2개도 재고 차감
+                    int totalQty = customQty * itemQuantity;
+                    requiredItems.merge(itemCode.name(), totalQty, Integer::sum);
+                }
+            } else {
+                // customizedQuantities가 없으면 기본 구성만 사용
+                for (Map.Entry<MenuItemCode, Integer> entry : baseComposition.entrySet()) {
+                    MenuItemCode itemCode = entry.getKey();
+                    int baseQty = entry.getValue();
+                    int totalQty = baseQty * itemQuantity;
+                    requiredItems.merge(itemCode.name(), totalQty, Integer::sum);
+                }
             }
         }
 
